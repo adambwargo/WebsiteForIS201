@@ -1,0 +1,318 @@
+/* scratch.css — custom stylesheet for Alaska scratch page */
+/* Adam Wargo — Web Dev Final Project                      */
+
+/* ── CSS Variables ── */
+:root {
+  --alaska-dark: #1a2f1a;
+  --alaska-green: #2d5a27;
+  --alaska-gold: #c9a84c;
+  --alaska-snow: #f4f1ea;
+  --alaska-text: #1e2a1e;
+  --alaska-muted: #5a6b5a;
+}
+
+/* ── Base / font-family + font-color ── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', Georgia, serif;
+  background-color: var(--alaska-snow);
+  color: var(--alaska-text);
+  line-height: 1.7;
+}
+
+/* ── Navigation bar ── */
+.topbar {
+  background-color: var(--alaska-dark);
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 32px;
+}
+
+.topbar a {
+  color: var(--alaska-gold);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.topbar a:hover {
+  color: white;
+}
+
+/* ── Hero — custom background color ── */
+.hero {
+  background-color: var(--alaska-green);
+  background-image:
+    radial-gradient(ellipse at top left, rgba(201,168,76,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(0,0,0,0.3) 0%, transparent 70%);
+  color: white;
+  text-align: center;
+  padding: 90px 24px 70px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: white;
+}
+
+.hero-sub {
+  color: var(--alaska-gold);
+  font-size: 1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* ── Anchor navigation ── */
+.anchor-nav {
+  background-color: white;
+  border-bottom: 2px solid var(--alaska-gold);
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.anchor-nav a {
+  color: var(--alaska-green);
+  text-decoration: none;
+  padding: 14px 24px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-right: 1px solid #e0dbd0;
+  transition: background 0.2s, color 0.2s;
+}
+
+.anchor-nav a:hover {
+  background-color: var(--alaska-green);
+  color: white;
+}
+
+/* ── Content wrapper div (positioning block) ── */
+.content-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 32px;
+}
+
+/* ── Dark section div (positioning block) ── */
+.dark-section {
+  background-color: var(--alaska-dark);
+  padding: 8px 0;
+}
+
+.dark-section .content-wrap {
+  padding-top: 52px;
+  padding-bottom: 52px;
+}
+
+/* ── Section headings ── */
+.section-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2rem;
+  color: var(--alaska-text);
+  margin-bottom: 6px;
+}
+
+.section-heading.light {
+  color: white;
+}
+
+.section-sub {
+  color: var(--alaska-muted);
+  margin-bottom: 1.5rem;
+}
+
+.light-sub {
+  color: rgba(255,255,255,0.65);
+}
+
+/* ── Gold underline rule ── */
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background: var(--alaska-gold);
+  margin-top: 10px;
+  margin-bottom: 28px;
+}
+
+/* ── Intro grid div (positioning block) ── */
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.intro-text p {
+  margin-bottom: 1rem;
+  color: var(--alaska-muted);
+  font-size: 1rem;
+}
+
+.intro-text strong {
+  color: var(--alaska-text);
+}
+
+.intro-img img {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+}
+
+.img-caption {
+  font-size: 0.78rem;
+  color: var(--alaska-muted);
+  margin-top: 8px;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ── Ordered list with nested unordered list ── */
+.main-list {
+  color: white;
+  padding-left: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.main-list > li {
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+  color: var(--alaska-gold);
+}
+
+.main-list > li strong {
+  color: var(--alaska-gold);
+  font-size: 1.05rem;
+}
+
+/* ── Embedded unordered list ── */
+.sub-list {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-top: 6px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 300;
+  font-size: 0.92rem;
+}
+
+.sub-list li {
+  margin-bottom: 4px;
+}
+
+/* ── Wildlife grid ── */
+.wildlife-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.wildlife-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  display: block;
+}
+
+.wildlife-label {
+  text-align: center;
+  font-weight: 500;
+  color: var(--alaska-green);
+  margin-top: 8px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.text-center-note {
+  text-align: center;
+  color: var(--alaska-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* ── Tableau wrapper ── */
+.tableau-wrap {
+  background: white;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 1.5rem;
+}
+
+.tableau-note {
+  font-size: 0.8rem;
+  color: var(--alaska-muted);
+  margin-top: 12px;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ── YouTube video embed ── */
+.video-wrap {
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 1rem;
+  border: 3px solid var(--alaska-gold);
+}
+
+/* ── Back to top link ── */
+.back-top {
+  text-align: center;
+  padding: 24px;
+  background: white;
+  border-top: 1px solid #e0dbd0;
+}
+
+.back-top a {
+  color: var(--alaska-green);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.back-top a:hover {
+  color: var(--alaska-gold);
+}
+
+/* ── Page footer ── */
+.page-footer {
+  background-color: var(--alaska-dark);
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  padding: 28px;
+  font-size: 0.85rem;
+}
+
+.page-footer a {
+  color: var(--alaska-gold);
+  text-decoration: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .intro-grid { grid-template-columns: 1fr; gap: 24px; }
+  .wildlife-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.5rem; }
+  .anchor-nav a { padding: 10px 14px; font-size: 0.75rem; }
+}
