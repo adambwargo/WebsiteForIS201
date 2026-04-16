@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snake — Adam Wargo</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #0d1117;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      width: 100%;
+      max-width: 500px;
+      border-bottom: 1px solid #3a3a3c;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #6aaf60; }
+    header a { color: #818384; text-decoration: none; font-size: 0.8rem; }
+    header a:hover { color: #c9a84c; }
+    #wrap { display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem; gap: 14px; }
+    #hud { display: flex; gap: 40px; }
+    .hud-block { text-align: center; }
+    .hud-label { font-size: 11px; color: #818384; letter-spacing: 2px; text-transform: uppercase; }
+    .hud-val { font-size: 26px; font-weight: 500; color: white; }
+    canvas { border: 1px solid #3a3a3c; border-radius: 6px; display: block; }
+    #msg { font-size: 13px; color: #818384; height: 20px; text-align: center; }
+    #controls { display: flex; gap: 10px; }
+    button {
+      padding: 10px 24px;
+      border-radius: 6px;
+      border: 1px solid #3a3a3c;
+      background: transparent;
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    button:hover { background: #1a2340; }
+    #dpad { display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(2, 52px); gap: 5px; }
+    #dpad button { width: 52px; height: 52px; padding: 0; font-size: 20px; }
+    #dpad .empty { background: none; border: none; cursor: default; }
+    #ai-hint { font-size: 11px; color: #818384; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="scratch.html">← Back</a>
+    <h1>Snake</h1>
+    <a href="index.html">Home</a>
+  </header>
+
+  <div id="wrap">
+    <div id="hud">
+      <div class="hud-block"><div class="hud-label">Score</div><div class="hud-val" id="score">0</div></div>
+      <div class="hud-block"><div class="hud-label">Best</div><div class="hud-val" id="best">0</div></div>
+      <div class="hud-block"><div class="hud-label">Speed</div><div class="hud-val" id="speed">1</div></div>
+    </div>
+
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <div id="msg">Press Start or any arrow key to play</div>
+
+    <div id="controls">
+      <button onclick="startGame()">Start</button>
+      <button onclick="togglePause()">Pause</button>
+    </div>
+
+    <div id="dpad">
+      <div class="empty"></div>
+      <button onclick="tryDir(0,-1)">↑</button>
+      <div class="empty"></div>
+      <button onclick="tryDir(-1,0)">←</button>
+      <button onclick="tryDir(0,1)">↓</button>
+      <button onclick="tryDir(1,0)">→</button>
+    </div>
+    <div id="ai-hint">Built with AI assistance — Adam Wargo</div>
+  </div>
+
+  <script>
+    const COLS=20, ROWS=20, CELL=20;
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let snake, dir, nextDir, food, score, best=0, loop, paused, running;
+
+    function startGame() {
+      snake = [{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+      dir = {x:1,y:0}; nextDir = {x:1,y:0};
+      score = 0; paused = false; running = true;
+      placeFood(); updateHUD();
+      clearInterval(loop);
+      setMsg('');
+      tick();
+      loop = setInterval(tick, getSpeed());
+    }
+
+    function getSpeed() { return Math.max(80, 160 - score * 8); }
+
+    function togglePause() {
+      if (!running) return;
+      paused = !paused;
+      setMsg(paused ? 'Paused — press Pause to resume' : '');
+    }
+
+    function tryDir(dx, dy) {
+      if (dx===1 && dir.x===-1) return;
+      if (dx===-1 && dir.x===1) return;
+      if (dy===1 && dir.y===-1) return;
+      if (dy===-1 && dir.y===1) return;
+      nextDir = {x:dx, y:dy};
+      if (!running) startGame();
+    }
+
+    function placeFood() {
+      let pos;
+      do { pos = {x: Math.floor(Math.random()*COLS), y: Math.floor(Math.random()*ROWS)}; }
+      while (snake.some(s => s.x===pos.x && s.y===pos.y));
+      food = pos;
+    }
+
+    function tick() {
+      if (paused || !running) return;
+      dir = {...nextDir};
+      const head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
+      if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS || snake.some(s => s.x===head.x && s.y===head.y)) {
+        gameOver(); return;
+      }
+      snake.unshift(head);
+      if (head.x===food.x && head.y===food.y) {
+        score++;
+        if (score > best) best = score;
+        updateHUD(); placeFood();
+        clearInterval(loop); loop = setInterval(tick, getSpeed());
+      } else {
+        snake.pop();
+      }
+      draw();
+    }
+
+    function gameOver() {
+      running = false; clearInterval(loop);
+      draw();
+      setMsg('Game over! Score: ' + score + ' — press Start to play again');
+    }
+
+    function updateHUD() {
+      document.getElementById('score').textContent = score;
+      document.getElementById('best').textContent = best;
+      document.getElementById('speed').textContent = Math.min(10, Math.floor(score/2)+1);
+    }
+
+    function setMsg(t) { document.getElementById('msg').textContent = t; }
+
+    function draw() {
+      ctx.fillStyle = '#0d1117';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#1a2340';
+      for (let x=0; x<COLS; x++) for (let y=0; y<ROWS; y++) {
+        if ((x+y)%2===0) ctx.fillRect(x*CELL, y*CELL, CELL, CELL);
+      }
+      snake.forEach((s, i) => {
+        const ratio = i / snake.length;
+        ctx.fillStyle = i===0 ? '#6aaf60' : `rgb(${Math.round(45+ratio*30)},${Math.round(140-ratio*60)},${Math.round(60-ratio*20)})`;
+        ctx.beginPath();
+        ctx.roundRect(s.x*CELL+1, s.y*CELL+1, CELL-2, CELL-2, i===0 ? 5 : 3);
+        ctx.fill();
+        if (i===0) {
+          ctx.fillStyle = '#0d1117';
+          const ex=dir.x, ey=dir.y, ex2=-ey, ey2=ex;
+          const cx=s.x*CELL+CELL/2, cy=s.y*CELL+CELL/2;
+          ctx.beginPath(); ctx.arc(cx+ex*5+ex2*3, cy+ey*5+ey2*3, 2, 0, Math.PI*2); ctx.fill();
+          ctx.beginPath(); ctx.arc(cx+ex*5-ex2*3, cy+ey*5-ey2*3, 2, 0, Math.PI*2); ctx.fill();
+        }
+      });
+      ctx.fillStyle = '#e24b4a';
+      ctx.beginPath(); ctx.arc(food.x*CELL+CELL/2, food.y*CELL+CELL/2, CELL/2-2, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#f09595';
+      ctx.beginPath(); ctx.arc(food.x*CELL+CELL/2-3, food.y*CELL+CELL/2-3, 3, 0, Math.PI*2); ctx.fill();
+    }
+
+    document.addEventListener('keydown', e => {
+      const map = {'ArrowUp':[0,-1],'ArrowDown':[0,1],'ArrowLeft':[-1,0],'ArrowRight':[1,0]};
+      if (map[e.key]) { e.preventDefault(); const [dx,dy]=map[e.key]; tryDir(dx,dy); }
+      if (e.key===' ') { e.preventDefault(); togglePause(); }
+    });
+
+    ctx.fillStyle = '#0d1117'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = '#6aaf60'; ctx.font = '500 18px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Press Start to play', canvas.width/2, canvas.height/2);
+  </script>
+</body>
+</html>
