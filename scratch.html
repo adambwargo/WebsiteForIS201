@@ -9,19 +9,16 @@
 </head>
 <body>
 
-  <!-- Navigation back to professional pages -->
   <div class="topbar">
     <a href="index.html">&larr; Back to Adam Wargo</a>
     <a href="snake.html">Play snake &rarr;</a>
   </div>
 
-  <!-- Hero with custom background color -->
   <div class="hero" id="top">
     <h1>Alaska</h1>
     <p class="hero-sub">The Last Frontier — where I grew up</p>
   </div>
 
-  <!-- On-page anchor nav -->
   <div class="anchor-nav">
     <a href="#about-alaska">About</a>
     <a href="#things-to-do">Things To Do</a>
@@ -30,10 +27,8 @@
     <a href="#video">Watch</a>
   </div>
 
-  <!-- About section -->
   <div class="content-wrap" id="about-alaska">
     <div class="section-heading">About Alaska</div>
-
     <div class="intro-grid">
       <div class="intro-text">
         <p>I grew up in <strong>Wasilla, Alaska</strong> — a town in the Mat-Su Valley, about 45 minutes north of Anchorage. Alaska isn't just a place I'm from; it shaped who I am. The outdoors, the seasons, the community — all of it stays with you.</p>
@@ -46,7 +41,6 @@
     </div>
   </div>
 
-  <!-- Things to Do — ordered list with embedded unordered list -->
   <div class="dark-section" id="things-to-do">
     <div class="content-wrap">
       <div class="section-heading light">Things To Do in Alaska</div>
@@ -87,12 +81,11 @@
     </div>
   </div>
 
-  <!-- Wildlife section with image -->
   <div class="content-wrap" id="wildlife">
     <div class="section-heading">Alaska Wildlife</div>
     <div class="wildlife-grid">
       <div class="wildlife-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Ours_brun_parcanimalierpyrenees_1.jpg/800px-Ours_brun_parcanimalierpyrenees_1.jpg" alt="Brown bear" />
+        <img src="https://en.wikipedia.org/wiki/Brown_bear#/media/File:2010-kodiak-bear-1.jpg" alt="Brown bear" />
         <div class="wildlife-label">Brown Bear</div>
       </div>
       <div class="wildlife-card">
@@ -100,52 +93,55 @@
         <div class="wildlife-label">Moose</div>
       </div>
       <div class="wildlife-card">
-        <img src="hhttps://upload.wikimedia.org/wikipedia/commons/3/37/Killerwhales_jumping.jpg" alt="Orca" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/37/Killerwhales_jumping.jpg" alt="Orca" />
         <div class="wildlife-label">Orca</div>
       </div>
     </div>
     <p class="text-center-note">Alaska is home to more wildlife than any other US state — including the largest population of bald eagles in the world.</p>
   </div>
 
-  <!-- Tableau embed -->
   <div class="dark-section" id="data">
     <div class="content-wrap">
       <div class="section-heading light">Alaska By The Numbers</div>
       <p class="section-sub light-sub">An interactive look at Alaska's geography and population data.</p>
       <div class="tableau-wrap">
-        <div class='tableauPlaceholder' id='viz1' style='position:relative;width:100%;'>
+        <div class='tableauPlaceholder' id='viz1776318216505' style='position:relative;width:100%;'>
           <noscript>
-            <a href='#'><img alt='Alaska' src='https://public.tableau.com/static/images/US/USStatesPopulation/Sheet1/1_rss.png' style='border: none' /></a>
+            <a href='#'><img alt=' ' src='https://public.tableau.com/static/images/X4/X4MSZ3JN8/1_rss.png' style='border: none' /></a>
           </noscript>
           <object class='tableauViz' style='display:none;'>
             <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
             <param name='embed_code_version' value='3' />
-            <param name='site_root' value='' />
-            <param name='name' value='USStatesPopulation/Sheet1' />
-            <param name='tabs' value='no' />
+            <param name='path' value='shared/X4MSZ3JN8' />
             <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/X4/X4MSZ3JN8/1.png' />
             <param name='animate_transition' value='yes' />
             <param name='display_static_image' value='yes' />
             <param name='display_spinner' value='yes' />
             <param name='display_overlay' value='yes' />
             <param name='display_count' value='yes' />
+            <param name='language' value='en-US' />
           </object>
         </div>
         <script type='text/javascript'>
-          var divElement = document.getElementById('viz1');
+          var divElement = document.getElementById('viz1776318216505');
           var vizElement = divElement.getElementsByTagName('object')[0];
-          vizElement.style.width='100%';
-          vizElement.style.height='500px';
+          if (divElement.offsetWidth > 800) {
+            vizElement.style.width='1366px'; vizElement.style.height='850px';
+          } else if (divElement.offsetWidth > 500) {
+            vizElement.style.width='1366px'; vizElement.style.height='850px';
+          } else {
+            vizElement.style.width='100%'; vizElement.style.height='2500px';
+          }
           var scriptElement = document.createElement('script');
           scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
           vizElement.parentNode.insertBefore(scriptElement, vizElement);
         </script>
-        <p class="tableau-note">⬆ Interactive Tableau chart — hover over states to explore population data. Alaska stands out as the largest state by area.</p>
+        <p class="tableau-note">⬆ Interactive Tableau chart — explore the data by hovering and clicking.</p>
       </div>
     </div>
   </div>
 
-  <!-- YouTube embed -->
   <div class="content-wrap" id="video">
     <div class="section-heading">Experience Alaska</div>
     <p class="section-sub">A stunning aerial tour of the Alaskan wilderness.</p>
@@ -162,12 +158,10 @@
     </div>
   </div>
 
-  <!-- Back to top anchor -->
   <div class="back-top">
     <a href="#top">↑ Back to top</a>
   </div>
 
-  <!-- Footer -->
   <div class="page-footer">
     <p>Made by Adam Wargo &mdash; <a href="index.html">Back to main site</a> &mdash; <a href="snake.html">Play snake</a></p>
   </div>
